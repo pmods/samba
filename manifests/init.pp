@@ -1,9 +1,11 @@
 include pkgng
 
-class samba {
-
+class samba (
     $smbusr = 'smbguest'
     $smbgrp = 'smbguest'
+){
+
+    $confroot = '/usr/local/etc'
 
     package { 'samba36':
         name     => 'samba36',
@@ -24,5 +26,10 @@ class samba {
         shell      => '/sbin/nologin',
         system     => true,
         require    => Group['smbgrp']
+    }
+
+    service { 'samba':
+        ensure => running,
+        enable => true,
     }
 }
