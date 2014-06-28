@@ -1,7 +1,7 @@
 include pkgng
 
 class samba (
-    $smbusr = 'smbguest'
+    $smbusr = 'smbguest',
     $smbgrp = 'smbguest'
 ){
 
