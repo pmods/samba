@@ -2,7 +2,8 @@ include pkgng
 
 class samba (
     $smbusr = 'smbguest',
-    $smbgrp = 'smbguest'
+    $smbgrp = 'smbguest',
+    $smbcnfsrc = '/root/etc/samba/smb.conf'
 ){
 
     $confroot = '/usr/local/etc'
@@ -26,6 +27,15 @@ class samba (
         shell      => '/sbin/nologin',
         system     => true,
         require    => Group['smbgrp']
+    }
+
+    file { 'smbcnf':
+        path => '/usr/local/etc/smb.conf',
+        ensure => file,
+        owner  => 'root',
+        group  => 'wheel',
+        source => $smbcnfsrc,
+        notify => Service['samba']
     }
 
     service { 'samba':
